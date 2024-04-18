@@ -17,6 +17,20 @@ export default function CustomersList() {
             console.error(error);
         });
     }, [])
+
+    const deleteCustomer = (pk) => {
+        
+        customersService.deleteCustomer(pk).then(() => {
+            const newCustomer = customers.filter((obj)=>{
+                return obj.pk !== pk
+            });
+            setCustomer(newCustomer);
+            console.log(customers);    
+        }).catch(error=>{
+            console.error(error);
+        });
+    }
+
   return (
     <div className="customers--list">
           <table className="table">
@@ -45,7 +59,7 @@ export default function CustomersList() {
                 <td>{c.address}</td>
                 <td>{c.description}</td>
                 <td>
-                <button> Delete</button>
+                <button onClick={()=>deleteCustomer(c.pk)}> Delete</button>
                 <a  href={"/customer/" + c.pk}> Update</a> 
                 </td>
               </tr>)}

@@ -21,5 +21,5 @@ from customer import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^api/customers/$', views.customers_list),
-    # re_path(r'^api/customers/(?P<pk>[0-9]+)$', views.customers_detail),
+    re_path(r'^api/customers/(?P<pk>[0-9]+)$', views.customers_detail),
 ]

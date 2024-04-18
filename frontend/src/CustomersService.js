@@ -11,4 +11,9 @@ export default class CustomersService{
 		return axios.get(url).then(response => response.data);
 	}
 
+    deleteCustomer(pk){
+        const url = `${API_URL}/api/customers/${pk}`;
+        return axios.delete(url);
+    }
+
 }
