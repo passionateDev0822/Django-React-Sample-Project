@@ -25,7 +25,6 @@ export default function CustomersList() {
                 return obj.pk !== pk
             });
             setCustomer(newCustomer);
-            console.log(customers);    
         }).catch(error=>{
             console.error(error);
         });

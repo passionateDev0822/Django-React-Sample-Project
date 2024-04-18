@@ -16,4 +16,9 @@ export default class CustomersService{
         return axios.delete(url);
     }
 
+    createCustomer(customer){
+        const url = `${API_URL}/api/customers/`;
+        return axios.post(url, customer).then(response => response.data);
+    }
+
 }
