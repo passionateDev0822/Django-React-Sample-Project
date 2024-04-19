@@ -1,6 +1,5 @@
 import React from "react";
-import { Routes } from 'react-router-dom';
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // import customized components
 import CustomersList from "./CustomersList";
@@ -49,9 +48,9 @@ const BaseLayout = () => (
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <BaseLayout />
-    </BrowserRouter>
+    </Router>
   );
 }
 

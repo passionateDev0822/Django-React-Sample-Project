@@ -31,7 +31,6 @@ def customers_list(request):
             nextPage = data.next_page_number()
         if data.has_previous():
             previousPage = data.previous_page_number()
-        
         return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/customers/?page=' + str(nextPage), 'prevlink': '/api/customers/?page=' + str(previousPage)})
     elif request.method == 'POST':
         data = request.data
@@ -50,4 +49,13 @@ def customers_detail(request, pk):
     if request.method == 'DELETE':
         customer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    elif request.method == 'GET':
+        serializer = CustomerSerializer(customer, context={'request': request})
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = CustomerSerializer(customer, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

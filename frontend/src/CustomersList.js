@@ -19,7 +19,6 @@ export default function CustomersList() {
     }, [])
 
     const deleteCustomer = (pk) => {
-        
         customersService.deleteCustomer(pk).then(() => {
             const newCustomer = customers.filter((obj)=>{
                 return obj.pk !== pk
