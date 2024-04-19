@@ -7,26 +7,50 @@ const customersService  = new CustomersService();
 export default function CustomersList() {
     const [customers, setCustomer] = useState([]);
     const [nextPageURL, setNextPageURL] = useState("");
+    const [previousPageURL, setPreviousPageURL] = useState("");
 
     useEffect(() => {
         customersService.getCustomers().then((result) => {
             console.log(">>>>>>>>>>", result);
             setCustomer(result.data);
             setNextPageURL(result.nextlink);
-        }).catch(error=>{
+            setPreviousPageURL(result.prevlink);
+          }).catch(error=>{
             console.error(error);
-        });
-    }, [])
-
-    const deleteCustomer = (pk) => {
-        customersService.deleteCustomer(pk).then(() => {
+          });
+        }, [])
+        
+        const deleteCustomer = (pk) => {
+          customersService.deleteCustomer(pk).then(() => {
             const newCustomer = customers.filter((obj)=>{
-                return obj.pk !== pk
+              return obj.pk !== pk
             });
             setCustomer(newCustomer);
-        }).catch(error=>{
+          }).catch(error=>{
             console.error(error);
-        });
+          });
+        }
+        
+        const nextPage = () => {
+          customersService.getCustomersByURL(nextPageURL)
+          .then((result)=>{
+            console.log(result);
+            setCustomer(result.data);
+            setNextPageURL(result.nextlink);
+            setPreviousPageURL(result.prevlink);
+          })
+          .catch((err)=>console.log(err));
+        }
+        
+        const previousPage = () => {
+          customersService.getCustomersByURL(previousPageURL)
+          .then((result)=>{
+            console.log(result);
+            setCustomer(result.data);
+            setNextPageURL(result.previousPage);
+            setPreviousPageURL(result.prevlink);
+          })
+        .catch((err)=>console.log(err));
     }
 
   return (
@@ -63,7 +87,8 @@ export default function CustomersList() {
               </tr>)}
               </tbody>
           </table>  
-          <button className="btn btn-primary">Next</button>
+          <button className="btn btn-primary" onClick={()=>previousPage()}>Previous</button>
+          <button className="btn btn-primary" onClick={()=>nextPage()}>Next</button>
 
       </div>
   )

@@ -15,7 +15,7 @@ def customers_list(request):
     if request.method == 'GET':
         data = []
         nextPage = 1
-        previousPage = 1
+        previousPage = -1
         customers = Customer.objects.all()
         page = request.GET.get('page', 1)
         paginator = Paginator(customers, 5)

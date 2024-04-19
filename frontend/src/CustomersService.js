@@ -31,4 +31,9 @@ export default class CustomersService{
         return axios.put(url, customer);
     }
 
+    getCustomersByURL(link){
+		const url = `${API_URL}${link}`;
+		return axios.get(url).then(response => response.data);
+	}
+
 }
